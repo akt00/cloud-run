@@ -1,23 +1,25 @@
 steps:
-# Build the Docker image
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image', '.']
-# Push the Docker image to Artifact Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image']
-# Deploy to Cloud Run
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'gcloud'
-  args:
-  - 'run'
-  - 'deploy'
-  - 'test-tf-service'  # Replace with your actual service name
-  - '--image'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA'  # Assuming you want to use commit SHA for versioning
-  - '--region'
-  - 'us-central1' # Replace with your desired region
+  # Build the Docker image (replace . with your source directory if needed)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image', '.']
+    # Add a comment explaining the build step
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:latest', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA']
+    # Create a tagged version of the image for deployment (using "latest" here)
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'test-tf-service'  # Replace with your actual service name
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:latest'  # Using the tag
+      - '--region'
+      - 'us-central1' # Replace with your desired region
+    # Add a comment explaining the deployment step
+
 images:
-- 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image'
+
 options:
   logging: NONE
-# test
