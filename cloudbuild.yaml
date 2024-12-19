@@ -1,8 +1,8 @@
 steps:
   # Build the Docker image (replace . with your source directory if needed)
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image', '.']
-    # Add a comment explaining the build step
+    args: ['build', '--no-cache', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image', '.']
+    # Add a comment explaining the build step (optional)
   - name: 'gcr.io/cloud-builders/docker'
     args: ['tag', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:latest', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA']
     # Create a tagged version of the image for deployment (using "latest" here)
@@ -16,7 +16,7 @@ steps:
       - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:latest'  # Using the tag
       - '--region'
       - 'us-central1' # Replace with your desired region
-    # Add a comment explaining the deployment step
+    # Add a comment explaining the deployment step (optional)
 
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image'
