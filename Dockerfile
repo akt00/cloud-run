@@ -1,5 +1,5 @@
 FROM python:3
-WORKDIR /app # Use /app for convention
+WORKDIR /app
 COPY . /app
 RUN pip install Flask
-CMD ["python3", "main.py"] # Use Gunicorn
+CMD ["python3", "main.py"]
