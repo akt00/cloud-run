@@ -11,9 +11,9 @@ steps:
   args:
   - 'run'
   - 'deploy'
-  - '$REPO_NAME'
+  - '<YOUR_SERVICE_NAME>'  # Replace with your actual service name
   - '--image'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/$REPO_NAME:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA'  # Assuming you want to use commit SHA for versioning
   - '--region'
   - 'us-central1' # Replace with your desired region
 images:
