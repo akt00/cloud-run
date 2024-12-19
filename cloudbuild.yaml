@@ -17,6 +17,6 @@ steps:
   - '--region'
   - 'us-central1' # Replace with your desired region
 images:
-- 'us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-images/$REPO_NAME:$COMMIT_SHA'
+- 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image'
 options:
   logging: NONE
