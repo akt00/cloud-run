@@ -1,13 +1,31 @@
 steps:
   # Build the Docker image (replace . with your source directory if needed)
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '--no-cache', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image', '.']
-    # Add a comment explaining the build step (optional)
+    args: ['build', '--no-cache', '-t', 'gcr.io/$PROJECT_ID/test-tf/my-image:latest', '.']
+  # Tag the image with the commit SHA for easy tracking
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['tag', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:latest', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA']
+    args: ['tag', 'gcr.io/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA', 'gcr.io/$PROJECT_ID/test-tf/my-image:latest']
+
+  # Deploy to Cloud Run service (replace SERVICE_NAME with your actual service name)
+  - name: 'gcr.io/cloud-builders/cloud-run'
+    args:
+      - deploy
+      - --image
+      - 'gcr.io/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA'
+      - --platform
+      - 'managed'  # Specify managed Cloud Run for serverless execution
+      - --region
+      - 'us-central1'  # Change to your desired region
+      - --service
+      - 'bulid-test'
+
+  # (Optional) Configure Cloud Build triggers for automatic deployments
+  - trigger:  # Example trigger for pushing to the main branch
+    branches: [ main ]
+    # Add more triggers for other events (e.g., tags, pull requests)
 
 images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image'
+  - 'gcr.io/$PROJECT_ID/test-tf/my-image'
 
 options:
-  logging: NONE
+  logging: NONE  # Adjust logging level as needed
