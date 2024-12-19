@@ -15,17 +15,17 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA']
 
-  # Deploy the image to Cloud Run
+  # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    args: [
-      'run', 'deploy', 'my-service',
-      '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:latest',
-      '--region', 'us-central1',
-      '--platform', 'managed',
-      '--allow-unauthenticated',
-      '--project', '$PROJECT_ID'
-    ]
+    entrypoint: gcloud
+    args:
+    - 'run'
+    - 'deploy'
+    - 'test'
+    - '--image'
+    - 'gcr.io/$PROJECT_ID/SERVICE_NAME:$COMMIT_SHA'
+    - '--region'
+    - 'us-central1-a'
 
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image'
