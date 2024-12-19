@@ -11,7 +11,7 @@ steps:
   args:
   - 'run'
   - 'deploy'
-  - '<YOUR_SERVICE_NAME>'  # Replace with your actual service name
+  - 'test-tf-service'  # Replace with your actual service name
   - '--image'
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:$COMMIT_SHA'  # Assuming you want to use commit SHA for versioning
   - '--region'
