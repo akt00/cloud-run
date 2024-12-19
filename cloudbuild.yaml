@@ -19,11 +19,6 @@ steps:
       - --service
       - 'bulid-test'
 
-  # (Optional) Configure Cloud Build triggers for automatic deployments
-  - trigger:  # Example trigger for pushing to the main branch
-    branches: [ main ]
-    # Add more triggers for other events (e.g., tags, pull requests)
-
 images:
   - 'gcr.io/$PROJECT_ID/test-tf/my-image'
 
