@@ -17,7 +17,7 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gcloud'
     script: |
-      gcloud run deploy test-tf --image us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image:latest --region us-central1 --platform managed --allow-unauthenticated
+      gcloud run deploy test-tf --image us-central1-docker.pkg.dev/ml-dev-1/test-tf/my-image:latest --region us-central1 --platform managed --allow-unauthenticated
 
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image'
