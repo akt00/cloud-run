@@ -23,4 +23,4 @@ images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/test-tf/my-image'
 
 options:
-  logging: NONE
+  logging: CLOUD_LOGGING_ONLY
